@@ -1,53 +1,251 @@
-extends base
-- var current_title = page.title || tag.name || category.name || site.title
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
 
-block title
-  if config.subtitle
-    title= config.title + ' | ' + config.subtitle
-  else
-    title= config.title
-block content
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-使用Hexo搭建个人博客" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/10/使用Hexo搭建个人博客/" class="article-date">
+  <time datetime="2019-06-10T02:45:54.321Z" itemprop="datePublished">2019-06-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/10/使用Hexo搭建个人博客/">使用Hexo搭建个人博客</a>
+    </h1>
+  
 
-  for post in page.posts.toArray()
-    .post
-      h2.post-title
-        include _partial/helpers
-        a(href=url_for(post.path))
-          +title(post)
-      .post-meta
-        if theme.comment.changyan.appid && theme.comment.changyan.appkey
-          a.comment-count(href=url_for(post.path) + '#comments')
-            span.cy_cmt_count(id = 'url::' + config.url +'/'+ post.path)
-            = ''+ __('guestbook') + ','
-            span.cy_cmt_participate(id = 'url::' + config.url +'/'+ post.path)
-            = ''+ __('participate')
-        p
-          if post.top
-            span= '【' + __('topped') + '】'
-          span.date= post.date.format(config.date_format)
-          if post.categories.length > 0
-            span
-              for category in post.categories.toArray()
-                a.category(href=url_for(category.path))= category.name
-      if post.description
-        .post-content
-          != post.description
-      else if post.excerpt
-        .post-content
-          != post.excerpt
-      else if post.content
-        - var br = post.content.indexOf('\n')
-        if br < 0
-          .post-content
-            != post.content
-        else
-          .post-content
-            != post.content.substring(0, br)
-      p(class='readmore')
-        a(href=url_for(post.path))= __('Readmore')
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="如何搭建自己的个人博客？-（使用hexo和github）"><a href="#如何搭建自己的个人博客？-（使用hexo和github）" class="headerlink" title="如何搭建自己的个人博客？ （使用hexo和github）"></a>如何搭建自己的个人博客？ （使用hexo和github）</h1><p> &ensp;&ensp;&ensp;&ensp;想着使用博客来记录一点自己学习生活的东西，正好学习到搭建个人博客，就拿来练练手了。这可能是第一篇个人博客吧！主要是给自己看的，嚯嚯嚯！！！ </p>
+<h3 id="一、本地环境搭建"><a href="#一、本地环境搭建" class="headerlink" title="一、本地环境搭建"></a>一、本地环境搭建</h3><p> &ensp;&ensp;&ensp;&ensp;要在自己的计算机上布置环境，这里使用到的是<a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">node.js</a>和<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git</a>，根据自己系统来选择相应版本。<br> &ensp;&ensp;&ensp;&ensp;这里我是用的是win10操作系统，所以下载完成后安装，在安装的时候直接选择下一步就行了。安装完成后，在windows控制台查看是否安装成功。win+R进入控制台，分别输入<br><font color="red">node -v,npm -v,git –version</font>查看安装版本。如果能够返回版本就说明安装成功了。具体如下图: <img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E6%88%AA%E5%9B%BE.png" alt="安装验证截图"> </p>
+<h3 id="二、配置github"><a href="#二、配置github" class="headerlink" title="二、配置github"></a>二、配置github</h3><p> &ensp;&ensp;&ensp;&ensp;在github中创建一个新的库，如果没有github账号，那就赶快注册一个吧！<br>进入账号后新建一个项目，具体如图: <img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/github1.png" alt="github1"><br> &ensp;&ensp;&ensp;&ensp;然后设置名字，也可以不选择初始化，默认选项就行，具体看图：<img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/github2.png" alt="github2"><br> &ensp;&ensp;&ensp;&ensp;进入新建的项目的页面，在最后page项目栏可以看到我们新建的项目已经发布了，我们浏览器输入访问一下，看是否成功。<img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/github3.png" alt="github3"><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/github4.png" alt="github4"><br> &ensp;&ensp;&ensp;&ensp;OK！到这里github端的配置基本完成。</p>
+<h3 id="三、下载安装Hexo"><a href="#三、下载安装Hexo" class="headerlink" title="三、下载安装Hexo"></a>三、下载安装Hexo</h3><p> &ensp;&ensp;&ensp;&ensp;首先我们要在硬盘的中创建文件夹，这个文件夹就是我们安装hexo的位置，以及以后我们写的博客也会在这里个文件夹里，所以要注意创建的位置，不推荐在C盘。这里我在D盘路径下创建一个名为”blog”的文件夹作为hexo的安装位置和blog的存放位置。<br><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E5%91%BD%E4%BB%A4%E5%8F%B01.png" alt="命令行1"></p>
+<p>命令<code>md</code>是创建一个文件夹。<br>开始安装hexo：<br><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E5%91%BD%E4%BB%A4%E8%A1%8C2.png" alt="命令行2"><br>检查一下是否安装完成：</p>
+<p><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E5%91%BD%E4%BB%A4%E8%A1%8C3.png" alt="命令行3"></p>
+<p>安装完成。</p>
+<h3 id="四、初始化hexo"><a href="#四、初始化hexo" class="headerlink" title="四、初始化hexo"></a>四、初始化hexo</h3><p>  &ensp;&ensp;&ensp;&ensp;通过命令行进入hexo的安装文件夹，输入<code>hexo init</code> 初始化。<br> <img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E5%91%BD%E4%BB%A4%E8%A1%8C4.png" alt="命令行4"><br> 时间有点久，等待一下看到Start就可以了，嚯嚯嚯！！</p>
+<h3 id="五、开启hexo服务"><a href="#五、开启hexo服务" class="headerlink" title="五、开启hexo服务"></a>五、开启hexo服务</h3><p>  &ensp;&ensp;&ensp;&ensp;输入 <code>hexo g</code>，等待进程开启后输入<code>hexo s</code>命令，会输出本地服务器地址，我们在浏览器输入地址，就可以浏览本地blog内容了。<br> <img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E5%91%BD%E4%BB%A4%E8%A1%8C5.png" alt="命令行5"><br> <img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E6%B5%8F%E8%A7%88%E5%99%A81.png" alt="浏览器1"><br>  &ensp;&ensp;&ensp;&ensp;hexo自带了一篇博客。如果只是本地自建的博客浏览到这里就可以了，前面的git服务也不用安装。<br> &ensp;&ensp;&ensp;&ensp;hexo停止服务的命令：<code>ctrl+c</code><br> &ensp;&ensp;&ensp;&ensp;如果端口被占用的话，先停止hexo服务（ctrl+c）然后输入命令<code>hexo server -p 5555</code> 来设置端口，成功启动之后浏览器输入<code>localhost:5555</code> 来浏览本地博客。</p>
+<h3 id="六、新建自己博客"><a href="#六、新建自己博客" class="headerlink" title="六、新建自己博客"></a>六、新建自己博客</h3><p>&ensp;&ensp;&ensp;&ensp;我们已经看到hexo的服务一起搭建起来，我们要写自己的博客怎么办呢？首先，我们先停止hexo服务，即<code>ctrl+c</code>。然后输入new一个新的博客，同样是在blog文件夹下命令行输入hexo n “这是一篇测试博客”，这样就生成了一个”这是一篇测试博客.md“文件。<img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E5%91%BD%E4%BB%A4%E8%A1%8C6.png" alt="命令行6"></p>
+<p>文件路径是：<code>D:\blog\source\\\_posts\</code> ，同样我们进入这个路径直接右键新建一个md文件也可以，或者将一篇用markdown写好的md文件放在这个路径下也行。<br> <img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E8%B7%AF%E5%BE%841.png" alt="路径1"><br> 在这里我使用pycharm编辑测试博客我们观察一下效果。<br> <img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/md1.png" alt="md1"><br>  &ensp;&ensp;&ensp;&ensp;开启hexo服务，看看是否将新建的博客推送到本地服务上了。<br> <img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E6%B5%8F%E8%A7%88%E5%99%A82.png" alt="浏览器2"><br>  &ensp;&ensp;&ensp;&ensp;Look！已经成功啦！！嚯嚯嚯！！</p>
+<h3 id="七、将本地博客推送到github服务器上"><a href="#七、将本地博客推送到github服务器上" class="headerlink" title="七、将本地博客推送到github服务器上"></a>七、将本地博客推送到github服务器上</h3><h4 id="1-安装hexo-deployer-git插件"><a href="#1-安装hexo-deployer-git插件" class="headerlink" title="1.安装hexo-deployer-git插件"></a>1.安装hexo-deployer-git插件</h4><p> &ensp;&ensp;&ensp;&ensp;要将文章部署到github远端服务器之前，要先在blog文件夹下安装一个扩展，命令是 ：<code>npm install hexo-deployer-git --save</code>，<a href="https://hexo.io/zh-cn/docs/deployment.html" target="_blank" rel="noopener">官方说明文档</a>  。<br><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E5%91%BD%E4%BB%A4%E8%A1%8C7.png" alt="命令行7"><br>&ensp;&ensp;&ensp;&ensp;WARN提示不用管它。</p>
+<h4 id="2-配置-config-yml文件"><a href="#2-配置-config-yml文件" class="headerlink" title="2.配置_config.yml文件"></a>2.配置<code>_config.yml</code>文件</h4><p>&ensp;&ensp;&ensp;&ensp;接下来这一步非常关键，配置blog文件夹下的<code>_config.yml</code>文件。windows环境下可以用notepad，记事本打开，这里我用pycharm编译器打开的。<br>&ensp;&ensp;&ensp;&ensp;在文件中的最后面的<code>deploy</code>中添加三处配置，1.<code>type : git</code>这个都一样照抄就行，注意冒号后面有一个空格；2.<code>repo: https://github.com/NcuLz/NcuLz.github.io.git</code>，这是你仓库的地址，注意要<code>.git</code>结尾，如果不知道在哪里，就进入自己的github的主页点开新建仓库然后在克隆处复制地址。如图：<img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E6%B5%8F%E8%A7%88%E5%99%A83.png" alt="浏览器3">3.<code>branch: master</code>,照抄就行。配置好如图：</p>
+<p><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/pycharm1.png" alt="pycharm1"></p>
+<p>点击保存。在命令行输入<code>hexo config</code>对刚才的配置文件进行编译。</p>
+<h4 id="3-配置git"><a href="#3-配置git" class="headerlink" title="3.配置git"></a>3.配置git</h4><p>&ensp;&ensp;&ensp;&ensp;   配置本机和github的SSH，在blog文件夹下右键进入Git Base。输入<code>ssh-keygen -t rsa</code>, 接着选择yes，然后按回车。之后会在默认在C盘路径下生成<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件。<img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/ssh.png" alt="ssh"></p>
+<p>将<code>id_rsa.pub</code> 文件内容添加到自己github的ssh中，具体如下图：<img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E6%B5%8F%E8%A7%88%E5%99%A84.png" alt="浏览器4"> 最后测试本机是否与github仓库连接上，在Git Base输入<code>ssh -T git@github.com</code>进行测试，如果返回successfull就代表已经连接上了。<br>&ensp;&ensp;&ensp;&ensp;如果不用本机直接和github仓库通过git连接这种方法，可以在推送博客的时候通过输入github的账号密码来进行，缺点是每次推送都需要输入一遍。</p>
+<h4 id="4-博客推送"><a href="#4-博客推送" class="headerlink" title="4.博客推送"></a>4.博客推送</h4><p>&ensp;&ensp;&ensp;&ensp;同样在blog这个文件夹的命令行窗口输入<code>hexo d</code>,稍微等待一会儿，就会看到成功推送上去了。<br><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E5%91%BD%E4%BB%A4%E8%A1%8C8.png" alt="命令行8"><br>打开浏览器查验，gogogogo<br><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E6%B5%8F%E8%A7%88%E5%99%A85.png" alt="浏览器5"><br>Yeah，Beautiful。。。。</p>
+<h3 id="八、换主题"><a href="#八、换主题" class="headerlink" title="八、换主题"></a>八、换主题</h3><h4 id="1、hexo官网选主题"><a href="#1、hexo官网选主题" class="headerlink" title="1、hexo官网选主题"></a>1、hexo官网选主题</h4><p>&ensp;&ensp;&ensp;&ensp;更换主题，需要到<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">hexo官网</a>下载主题，并且里面还有许多有意思的插件，以后再搞。<img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E6%B5%8F%E8%A7%88%E5%99%A86.png" alt="浏览器6"></p>
+<h4 id="2、下载主题"><a href="#2、下载主题" class="headerlink" title="2、下载主题"></a>2、下载主题</h4><p>&ensp;&ensp;&ensp;&ensp;找到自己喜欢的主题之后一般是在github中克隆主题的地址。<br><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E6%B5%8F%E8%A7%88%E5%99%A87.png" alt="浏览器7"><br>克隆之后，在git bash中输入<code>git clone url</code>将主题下载下来(在git bash 中使用Ctrl+Ins快捷键将复制内容粘贴进git bash 命令行)。<img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/gitbash1.png" alt="gitbash1"></p>
+<p>有的主题可能下载不了，可以直接在github下载zip的方式进行下载。</p>
+<h4 id="3、设置"><a href="#3、设置" class="headerlink" title="3、设置"></a>3、设置</h4><p>&ensp;&ensp;&ensp;&ensp;将下载的文件夹放入blog\themes文件夹下，然后设置<code>_config.yml</code>配置文件。<br>将themes后名字改为主题名字即可。<br><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E4%B8%BB%E9%A2%98.png" alt="主题"><br>然后blog目录下命令行输入<code>hexo s</code>可以在本地4000端口查看主题已生效，输入<code>hexo d --g</code>推送到GitHub服务器（有点慢）。<br><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/%E4%B8%BB%E9%A2%982.png" alt="主题2"><br>下面就是修改主题啦！！！慢慢摸索哈哈！<br>写这个教程累死了。。</p>
+<p>附上两篇参考：<br><a href="https://www.cnblogs.com/trista222/p/8017300.html" target="_blank" rel="noopener">https://www.cnblogs.com/trista222/p/8017300.html</a><br><a href="https://www.cnblogs.com/fengxiongZz/p/7707219.html" target="_blank" rel="noopener">https://www.cnblogs.com/fengxiongZz/p/7707219.html</a><br><a href="https://www.bilibili.com/video/av44544186" target="_blank" rel="noopener">https://www.bilibili.com/video/av44544186</a></p>
 
-  include _partial/paginator
-block pageOnly
-  script(type='text/javascript', src=url_for(theme.js) + '/totop.js' + '?v=' + theme.version, async)
-  if theme.comment.changyan.appid && theme.comment.changyan.appkey
-    script(id="cy_cmt_num", src='https://changyan.sohu.com/upload/plugins/plugins.list.count.js' + '?clientId=' + theme.comment.changyan.appid)
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/10/使用Hexo搭建个人博客/" data-id="cjwps0y910001ms9ghspc3ss8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/06/hello-world/" class="article-date">
+  <time datetime="2019-06-06T09:14:32.055Z" itemprop="datePublished">2019-06-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/06/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/06/hello-world/" data-id="cjwps0y8m0000ms9g0a9oxrhb" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/10/使用Hexo搭建个人博客/">使用Hexo搭建个人博客</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/06/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
