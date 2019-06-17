@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Hello World · Fate Studio</title>
+    <title>ROCm与tensorflow在ubuntu 18.04下的安装教程 · Fate Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">Fate Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Hello World</a>
+                <a href="#" class="post-name">ROCm与tensorflow在ubuntu 18.04下的安装教程</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Hello World
+            ROCm与tensorflow在ubuntu 18.04下的安装教程
             <!-- 404 -->
             
         </h1>
@@ -266,12 +266,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">73</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1k</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/06/06</span>
+                    <span class="post-intro-time">2019/06/17</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -395,19 +395,68 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <h1 id="ROCm与tensorflow在ubuntu-18-04下的安装教程"><a href="#ROCm与tensorflow在ubuntu-18-04下的安装教程" class="headerlink" title="ROCm与tensorflow在ubuntu 18.04下的安装教程"></a>ROCm与tensorflow在ubuntu 18.04下的安装教程</h1><p>&ensp;&ensp;&ensp;&ensp;本来准备买Nvidai的显卡，可是囊中羞涩再加上听说AMD的卡也能使用tensorflow进行深度学习加速了，所以1149京东买了个蓝宝石RX580 8G 白金版。网上找安装教程时发现教程非常少，所以决定写一篇详细的安装攻略，以便下次重装系统时少走弯路。</p>
+<h2 id="一、计算机配置环境"><a href="#一、计算机配置环境" class="headerlink" title="一、计算机配置环境"></a>一、计算机配置环境</h2><p>CPU：&ensp;&ensp;intel i7 8700<br>GPU：&ensp;&ensp;AMD RX580 8G<br>内存：&ensp;&ensp;8G*2&ensp;DDR4 2400MHZ<br>硬盘：&ensp;&ensp;SSD 120G<br>主板：&ensp;&ensp;华硕ROG B360<br>电源：&ensp;&ensp;安钛克550W<br>操作系统：&ensp;&ensp;Ubuntu 18.04 (不要先装Anaconda，装了也没关系解决办法，<br><a href="#jump">解决办法点击跳转</a>)   
+安装ROCm版本：最新2.5（截止2019.06.10）<br>tensorflow版本：1.13</p>
+<h2 id="二、ROCm介绍"><a href="#二、ROCm介绍" class="headerlink" title="二、ROCm介绍"></a>二、ROCm介绍</h2><p>&ensp;&ensp;&ensp;&ensp;<a href="https://github.com/RadeonOpenCompute/ROCm" target="_blank" rel="noopener">github地址</a>，
+<a href="https://rocm.github.io/" target="_blank" rel="noopener">社区地址</a>，<a href="https://blog.csdn.net/JackyTintin/article/details/74637157" target="_blank" rel="noopener">相关blog</a>  </p>
+<p>&ensp;&ensp;&ensp;&ensp;ROC全称为Radeon Open Compute，即为“Radeon开放计算”，其中Radeon为AMD GPU的一个系列。<br>&ensp;&ensp;&ensp;&ensp;ROCm 全称ROC platforM，是基于一系列开源项目的AMD GPU计算生态平台。类似于NVIDIA家的CUDA。截止2019.06，ROCm版本已经发布到2.5,支持的深度学习框架有Tensorflow、Caffe、Pytorch。<br>&ensp;&ensp;&ensp;&ensp;MIOpen：AMD发布的深度学习加速库，相当于NVIDIA家的cuDNN深度学习加速库，其实是根据cuDNN移植过来的。<br>&ensp;&ensp;&ensp;&ensp;<a href="http://www.hsafoundation.com/" target="_blank" rel="noopener">HSA</a>，Heterogeous system architecture（异构系统架构）可以理解为在硬件系统（CPU、GPU、ARM等不同架构处理器）之上的一套统一编程环境，比如相同的代码使用HSA可以在不同硬件平台运行。起初是MD 等为支持 CPU+GPU 混合计算生态而成立了非赢利组织 HSA 基金，提供 runtime 和架构 API 标准。现成员包括 AMD、三星、高通、ARM、TI、Imagination、MTK等。</p>
+<h2 id="三、ubuntu下安装ROCm"><a href="#三、ubuntu下安装ROCm" class="headerlink" title="三、ubuntu下安装ROCm"></a>三、ubuntu下安装ROCm</h2><p>1.先来更新一下系统环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt dist-upgrade</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>2.安装libnuma</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libnuma-dev</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>3.重启系统</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>4.安装ROCm apt存储库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -qO - http://repo.radeon.com/rocm/apt/debian/rocm.gpg.key | sudo apt-key add -</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/ROCm_tensorflow_picture/%E6%B7%BB%E5%8A%A0ROCm%E6%88%AA%E5%9B%BE.png" alt="安装后结果"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &apos;deb [arch=amd64] http://repo.radeon.com/rocm/apt/debian/ xenial main&apos; | sudo tee /etc/apt/sources.list.d/rocm.list</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/ROCm_tensorflow_picture/%E5%88%9B%E5%BB%BAROCm%E5%AD%98%E5%82%A8%E5%BA%931.png" alt="安装结果图"></p>
+<p>5.更新apt库list并且安装ROCm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install rocm-dkms</span><br></pre></td></tr></table></figure>
+
+<p>下载大概504M的内容，然后解压后需要2336M空间。<br>使用ubuntu自带源有点慢呀！500M下了半个小时。</p>
+<p><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90.png" alt="安装完成"></p>
+<p>6.设置权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groups</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -a -G video $LOGNAME</span><br></pre></td></tr></table></figure>
+
+<p>7.重启</p>
+<p>8.检查安装是否成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/rocm/bin/rocminfo</span><br></pre></td></tr></table></figure>
+
+<p>在终端命令行输入上面命令，如果安装成功，会在输出的HSA系统属性中显示GPU的信息。<br><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/ROCm_tensorflow_picture/%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F1.png" alt="安装验证"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/rocm/opencl/bin/x86_64/clinfo</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/ROCm_tensorflow_picture/%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F2.png" alt="安装验证"></p>
+<p>如果上面都能显示GPU的信息的话，说明已经安装成功，如果没有的话点击<a href="https://rocm.github.io/install_issues.html" target="_blank" rel="noopener">install issue</a>查找原因。</p>
+<p>9.将ROCm添加进path</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &apos;export PATH=$PATH:/opt/rocm/bin:/opt/rocm/profiler/bin:/opt/rocm/opencl/bin/x86_64&apos; | sudo tee -a /etc/profile.d/rocm.sh</span><br></pre></td></tr></table></figure>
+
+<p>OK！安装完成了。</p>
+<h3 id="四、卸载ROCm"><a href="#四、卸载ROCm" class="headerlink" title="四、卸载ROCm"></a>四、卸载ROCm</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt autoremove rocm-dkms rocm-dev rocm-utils</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、安装tensorflow"><a href="#五、安装tensorflow" class="headerlink" title="五、安装tensorflow"></a>五、安装tensorflow</h2><p>ROCm安装完成后，选择安装tensorflow，目前ROCm支持的tensorflow的版本是1.13。<br>安装tensorflow之前要先安装一些依赖。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install rocm-libs miopen-hip cxlactivitylogger</span><br></pre></td></tr></table></figure>
+
+<p>然后安装tensorflow</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install python3-pip</span><br><span class="line">pip3 install --user tensorflow-rocm</span><br></pre></td></tr></table></figure>
+
+<p>安装过程有点慢！！， <strong>特别注意</strong>：一定不要先安装Anaconda，不然没法用。<br><span id="jump">安装了怎么办？</span>办法一：<a href="https://blog.csdn.net/kuweicai/article/details/90145242" target="_blank" rel="noopener">卸载Anaconda3</a><br>方法二：<a href="https://hub.docker.com/r/rocm/tensorflow/" target="_blank" rel="noopener">使用Docker</a><br>安装之后验证一下，终端依次输入：<br><code>python3</code><br><code>import tensorflow as tf</code><br>如果没有提示错误的话就安装成功了。<br><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/ROCm_tensorflow_picture/tensorflow.png" alt="安装成功"><br><a href="https://github.com/ROCmSoftwarePlatform/tensorflow-upstream/blob/develop-upstream/rocm_docs/tensorflow-quickstart.md" target="_blank" rel="noopener">官方指导文档</a><br>  包括MNIST、CIFAR-10等网络的使用。</p>
+<h2 id="六、benchmark测试"><a href="#六、benchmark测试" class="headerlink" title="六、benchmark测试"></a>六、benchmark测试</h2><p>要git，Google官方提供的基准测试的文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone -b cnn_tf_v1.13_compatible https://github.com/tensorflow/benchmarks.git</span><br></pre></td></tr></table></figure>
+
+<p>其中v1.13是安装的tensorflow的版本，我这里安装的是1.13。<br>之后：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd benchmarks</span><br><span class="line">python3 ./scripts/tf_cnn_benchmarks/tf_cnn_benchmarks.py --model=resnet50 --num_gpus=1</span><br></pre></td></tr></table></figure>
+
+<p>这里是训练resnet50网络，具体成绩如下：<br><img src="https://raw.githubusercontent.com/NcuLz/markdownpic/master/ROCm_tensorflow_picture/benchmark%E6%88%AA%E5%9B%BE.png" alt="benchmark成绩"><br>在github上有个ROCm与NVIDIA的cuDNN的性能讨论，<a href="https://github.com/ROCmSoftwarePlatform/tensorflow-upstream/issues/173" target="_blank" rel="noopener">去看看</a>。</p>
+<p><strong>参考:</strong><br><a href="https://blog.csdn.net/JackyTintin/article/details/74637157" target="_blank" rel="noopener">AMD ROCm平台简介</a><br><a href="https://rocm.github.io/" target="_blank" rel="noopener">AMD ROCm官方网页</a><br><a href="https://github.com/RadeonOpenCompute/ROCm" target="_blank" rel="noopener">AMD ROCm Github地址</a><br><a href="https://rocm-documentation.readt" target="_blank" rel="noopener">ROCm说明文档</a><br><a href="https://github.com/tensorflow/benchmarks/tree/master/scripts/tf_cnn_benchmarks" target="_blank" rel="noopener">Tendorflow/benchmarks</a><br><a href="https://github.com/ROCmSoftwarePlatform/tensorflow-upstream" target="_blank" rel="noopener">ROCm/tensorflow-upstream</a><br><a href="https://github.com/ROCmSoftwarePlatform/tensorflow-upstream/issues/173" target="_blank" rel="noopener">Performance comparsion:AMD with ROCm VS NVIDIA with cuDNN?</a></p>
 
     </article>
     <!-- license  -->
@@ -416,13 +465,13 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/06/10/使用Hexo搭建个人博客/" title="使用Hexo搭建个人博客">
-                    <div class="nextTitle">使用Hexo搭建个人博客</div>
-                </a>
-            
         </li>
         <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/06/10/使用Hexo搭建个人博客/" title="使用Hexo搭建个人博客">
+                    <div class="prevTitle">使用Hexo搭建个人博客</div>
+                </a>
             
         </li>
     </ul>
@@ -533,7 +582,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ROCm与tensorflow在ubuntu-18-04下的安装教程"><span class="toc-number">1.</span> <span class="toc-text">ROCm与tensorflow在ubuntu 18.04下的安装教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、计算机配置环境"><span class="toc-number">1.1.</span> <span class="toc-text">一、计算机配置环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、ROCm介绍"><span class="toc-number">1.2.</span> <span class="toc-text">二、ROCm介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、ubuntu下安装ROCm"><span class="toc-number">1.3.</span> <span class="toc-text">三、ubuntu下安装ROCm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#四、卸载ROCm"><span class="toc-number">1.3.1.</span> <span class="toc-text">四、卸载ROCm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、安装tensorflow"><span class="toc-number">1.4.</span> <span class="toc-text">五、安装tensorflow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、benchmark测试"><span class="toc-number">1.5.</span> <span class="toc-text">六、benchmark测试</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
